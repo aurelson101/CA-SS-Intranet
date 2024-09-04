@@ -6,9 +6,13 @@ This repository contains two bash scripts for creating a custom Certificate Auth
 
 ## Scripts
 
-1. `create_ca_certificate.sh`: Creates a new Certificate Authority (CA)
-2. `create_domain_cert.sh`: Creates a domain certificate signed by the CA
-
+1. `CA.sh`: Creates a new Certificate Authority (CA)
+2. `CA-SEC.sh`: Creates a new Certificate Authority (CA) with secure password
+3. `ssl.sh`: Creates a domain certificate signed by the CA
+4. `ssl-sec.sh`: Creates a domain certificate signed by the CA with secure password
+5. `ssl-sec.sh`: Creates a domain certificate signed by the CA with secure password
+6. `ssl-p12.sh`: Creates a domain certificate signed by the CA
+   
 ## Usage
 
 ### Creating a Certificate Authority
@@ -56,6 +60,11 @@ This script will:
 - Provide a summary of the created certificate and instructions for use
 - Your CA are will be like /yourfolder/CAfolder
 - Your SSL are will be like /yourfolder/CAfolder/domains/xxx.yourdomain.com
+
+### Creating a P12 Domain Certificate
+You need to create Certificate domain first and after generate a p12 format like exemple:
+`./ssl.sh <CA_name>`  
+`./ssl-p12.sh <CA_name>`
 
 ## Important Notes
 
