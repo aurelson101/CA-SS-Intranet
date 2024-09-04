@@ -63,6 +63,7 @@ This script will:
 
 ### Creating a P12 Domain Certificate
 You need to create Certificate domain first and after generate a p12 format like exemple:
+
 `./ssl.sh <CA_name>`  
 `./ssl-p12.sh <CA_name>`
 
