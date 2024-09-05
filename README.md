@@ -12,6 +12,7 @@ This repository contains two bash scripts for creating a custom Certificate Auth
 4. `ssl-sec.sh`: Creates a domain certificate signed by the CA with secure password
 5. `ssl-sec.sh`: Creates a domain certificate signed by the CA with secure password
 6. `ssl-p12.sh`: Creates a domain certificate signed by the CA
+7. `unifi-ssl.sh`: This option allows you to create an SSL for the Unifi controller
    
 ## Usage
 
