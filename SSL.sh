@@ -55,12 +55,27 @@ openssl genrsa -out "${DOMAIN}.key" 2048
 openssl req -new -key "${DOMAIN}.key" -out "${DOMAIN}.csr" \
     -subj "/C=${COUNTRY}/ST=${STATE}/L=${CITY}/O=${ORGANIZATION}/OU=IT/CN=${DOMAIN}"
 
+# Initialize subjectAltName string
+SAN="DNS:${DOMAIN}, DNS:*.${DOMAIN#*.}"
+
+# Ask for the number of additional subjectAltName entries
+read -p "How many additional subjectAltName entries do you want to add? " SAN_COUNT
+
+# Ask for additional subjectAltName entries
+for ((i=1; i<=SAN_COUNT; i++)); do
+    echo "Entry $i:"
+    read -p "Enter the type (DNS or IP): " SAN_TYPE
+    read -p "Enter the value: " SAN_VALUE
+    
+    SAN="${SAN}, ${SAN_TYPE}:${SAN_VALUE}"
+done
+
 # Create a configuration file for X509v3 extensions
 cat > "${DOMAIN}.ext" << EOF
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
 keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = DNS:${DOMAIN}, DNS:*.${DOMAIN#*.}
+subjectAltName = ${SAN}
 EOF
 
 # Sign the certificate with the root CA
@@ -80,6 +95,7 @@ echo "Country: $COUNTRY"
 echo "State/Province: $STATE"
 echo "City: $CITY"
 echo "Organization: $ORGANIZATION (extracted from CA certificate)"
+echo "Subject Alternative Names: ${SAN}"
 echo ""
 echo "To use this certificate on your web server:"
 echo "1. Copy ${DOMAIN}.crt and ${DOMAIN}.key to your server."
